@@ -14,11 +14,13 @@ body {
   margin: 100px auto 0px auto;
   padding: 10px; }
 
-#deleteDialog h2 {
-  padding: 10px;
-  font-weight: normal;
-  text-align: center;
-  font-family: "Roboto"; }
+#deleteDialog {
+  display: none; }
+  #deleteDialog h2 {
+    padding: 10px;
+    font-weight: normal;
+    text-align: center;
+    font-family: "Roboto"; }
 
 .button, .confirm {
   display: block;
