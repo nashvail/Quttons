@@ -1,8 +1,9 @@
 'use strict';
 var materialDelete = MaterialDialog.getNewInstance($('#deleteBox'));
 materialDelete.init({
-	width : 400,
-	height : 300,
-	icon : './images/icon_delete.png'
+	width : 250,
+	height : 100,
+	icon : './images/icon_delete.png',
+	easing : 'easeInOutQuint'
 });
 

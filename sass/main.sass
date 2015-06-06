@@ -1,3 +1,4 @@
+$color_confirm_btn : #EB1220
 *
 	box-sizing : border-box
 	margin : 0
@@ -6,12 +7,40 @@ body
 	background-color : white
 
 #deleteBox
-	width : 70px
-	height : 70px
-	background-color : white
-	border-radius : 70px
+	width : 50px
+	height : 50px
+	background-color : #EB1220
+	border-radius : 50px
 	margin : 100px auto 0px auto
+	padding : 10px
+
+#deleteDialog
 	h2
-		font-family : Roboto
-		text-align : center
 		padding : 10px
+		font-weight : normal
+		text-align : center
+		font-family : "Avenir Next"
+
+.button 
+	display : block
+	width : 70px
+	height : 30px
+	background-color : green
+	cursor : pointer
+
+.confirm
+	@extend .button
+	color : white
+	background-color : $color_confirm_btn
+	width : 150px
+	border : 1px solid darken($color_confirm_btn, 10%)
+	margin : 0 auto
+	font-family : "Roboto"
+	line-height : 20px
+	border-radius : 4px
+	padding: 5px
+	text-align : center
+	margin-top : 5px
+	&:hover 
+		box-shadow : 0px 1px 2px rgba(0, 0, 0, 0.1)
+
