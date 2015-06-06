@@ -1,19 +1,20 @@
 (function() {
 	'use strict';
 	// Exporting module to global
-	window.MaterialDialog = {};
+	window.MaterialButton = {};
 
 	// Factory method for producing new Material Dialog objects
-	window.MaterialDialog.getNewInstance = function(jQueryDOMElement) {
-		return new MaterialDialog(jQueryDOMElement);
+	window.MaterialButton.getInstance = function(jQueryDOMElement) {
+		return new MaterialButton(jQueryDOMElement);
 	};
 	
-	function MaterialDialog(jQueryDOMElement) {
+	function MaterialButton(jQueryDOMElement) {
+		// Cache the importatn elements as jQuery object
 		this.$container = jQueryDOMElement;
 		this.$content = this.$container.children();
 		this.$closeButton = this.$container.find('.close');
 
-		// Stores initial(default) values of height and width and others 
+		// Stores initial(default) values of height and width and other properties
 		this.initialConfig = {
 			width : this.$container.width(),
 			height : this.$container.height(),
@@ -53,7 +54,7 @@
 
 			// If clicked out side the material box do same thing as closing the dialog
 			$(document).on('click', function() {
-				that.closeDialog.call(that);
+				that.closeDialog();
 			});
 
 		};
@@ -61,7 +62,7 @@
 		// Animates in the container, Returns a promise to chain animation
 		this.animateIn = function() {
 			var that = this;
-			return new Promise(function(res, rej){
+			return new Promise(function(resolve, reject){
 				that.removeIcon();
 				that.$container.velocity({
 					width : that.finalConfig.width +"px",
@@ -71,7 +72,7 @@
 				},{
 					complete : function() {
 						// resolve the promise on animation complete
-						res();
+						resolve();
 					},
 					duration : 500,
 					easing : that.finalConfig.easing
@@ -91,6 +92,8 @@
 			},{easing : this.finalConfig.easing, duration : 300});
 		};
 
+		// Close the dialog and return back to icon mode, is triggered
+		// when clicked on close button or when clicked outside the dialog
 		this.closeDialog = function() {
 			var that = this;
 			this.$content.fadeOut("fast",function() {
