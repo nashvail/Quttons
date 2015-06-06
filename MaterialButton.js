@@ -40,7 +40,7 @@
 			// Handle Click on the whole container
 			this.$container.on('click', function(event) {
 				that.animateIn().then(function() {
-					that.$content.fadeIn();
+					that.$content.velocity("fadeIn", {duration : 500});
 				});
 				event.stopPropagation();
 			});
