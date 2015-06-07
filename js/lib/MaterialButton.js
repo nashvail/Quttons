@@ -64,8 +64,9 @@
 
 			// Handle click on the close button
 			this.$closeButton.on('click', function(event){
-				that.closeDialog.call(that);
-				event.stopPropagation();
+				if(that.isExpanded){
+					that.closeDialog();
+				}
 			});
 
 
@@ -110,12 +111,11 @@
 					width : this.dialogConfig.width +"px",
 					height : this.dialogConfig.height + "px",
 					borderRadius : this.dialogConfig.borderRadius,
-					backgroundColor : this.dialogConfig.backgroundColor
+					backgroundColor : this.dialogConfig.backgroundColor,
 				}, o : {duration : 500, easing : this.buttonConfig.easing}},
 
 				{e : this.$dialog, p : "fadeIn", o : {duration : 300}}
 			];
-
 			$.Velocity.RunSequence(loadingSequence);
 		};
 
@@ -144,7 +144,7 @@
 	function toHex(colorRGB) {
 	    var parts = colorRGB.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
 	    delete(parts[0]);
-	    for (var i = 1; i <= 3; ++i) {
+	    for (var i = 1; i <= 3; i++) {
 	        parts[i] = parseInt(parts[i]).toString(16);
 	        if (parts[i].length == 1) parts[i] = '0' + parts[i];
 	    }

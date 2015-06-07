@@ -9,24 +9,26 @@
 </head>
 <body>
 	
-	<div class="materialButton" id = "uploadButton">
-		<div id="uploadDialog">
-			<center>
-			<div class="urlField">
-				<input type="text" id = "fileUrl" placeholder = "Enter URL">
-			</div>
-			</center>
-			<div class="uploadButton">
-				Choose a file to upload
+	<div class="buttonCollection">
+		<div class="materialButton collectionPart" id = "uploadButton">
+			<div id="uploadDialog">
+				<h2>Upload a new file</h2>
+				<div class="urlField">
+					<input type="text" id = "fileUrl" placeholder = "Enter URL">
+				</div>
+				<div class="uploadButton">
+					Choose a file to upload
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="materialButton" id = "deleteButton">
-		<div id="deleteDialog">
-			<h2>Sure?</h2>
-			<div class="confirm">Yes, delete this file</div>
+		<div class="materialButton collectionPart" id = "deleteButton">
+			<div id="deleteDialog">
+				<h2>Sure?</h2>
+				<div class="confirm">Yes, delete this file</div>
+			</div>
 		</div>
+		
 	</div>
 	
 	<script type = "text/javascript" src = "js/lib/jquery-1.11.2.min.js"></script>

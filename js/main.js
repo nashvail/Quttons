@@ -18,3 +18,7 @@ materialDeleteButton.init({
 	icon : './images/icon_delete.png',
 	backgroundColor : "#EB1220"
 });
+
+$('.uploadButton').on('click', function() {
+	console.log("Choose a file to upload");
+});
