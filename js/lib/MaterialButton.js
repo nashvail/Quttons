@@ -9,34 +9,47 @@
 	};
 	
 	function MaterialButton(jQueryDOMElement) {
-		// Cache the importatn elements as jQuery object
+
+		// Cache the important elements as jQuery object
 		this.$container = jQueryDOMElement;
-		this.$content = this.$container.children();
+		this.$dialog = this.$container.children();
+		// Cache the close button if it exists
 		this.$closeButton = this.$container.find('.close');
 
-		// Stores initial(default) values of height and width and other properties
-		this.initialConfig = {
-			width : this.$container.width(),
-			height : this.$container.height(),
-			backgroundColor : toHex(this.$container.css('background-color'))
+		// Configuration of the popped up dialog, direct child of
+		this.dialogConfig = {
+			width : this.$dialog.width(),
+			height : this.$dialog.height(),
+			backgroundColor : toHex(this.$dialog.css('background-color')),
+			borderRadius : this.$dialog.css('border-radius')
 		};
 
-		// Final Config specifies value of div once it pops up
-		this.finalConfig = {
-			width : 500,
-			height : 500,
-			backgroundColor : "#fff",
+		// The width, height, icon, color of the formed button 
+		this.buttonConfig = {
+			width : 60,
+			height : 60,
+			backgroundColor : "#EB1220",
+			icon : "", // Url of the icon that the button is supposed to hold
 			easing : 'easeInOutQuint'
 		};
 
 		// Initializes the click listeners on the box itself and other elements
-		this.init = function (finalConfig) {
-			$.extend(this.finalConfig, finalConfig);
-			var that = this;
+		this.init = function (buttonConfig) {
 
-			// Set up the icon for the div 
+			$.extend(this.buttonConfig, buttonConfig);
+			this.$dialog.hide();
+
+			// Set up the icon and other properties of the div
 			this.setIcon();
-			this.$content.hide();
+			this.$container.css({
+				'width' : this.buttonConfig.width + "px",
+				'height' : this.buttonConfig.height + "px",
+				'background-color' : this.buttonConfig.backgroundColor,
+				'border-radius' : this.buttonConfig.height + "px"
+			});
+
+
+			var that = this;
 			// Handle Click on the whole container
 			this.$container.on('click', function(event) {
 				that.animateIn();
@@ -62,13 +75,13 @@
 			this.removeIcon();
 			var loadingSequence = [
 				{e : this.$container, p : {
-					width : this.finalConfig.width +"px",
-					height : this.finalConfig.height + "px",
-					borderRadius : "4px",
-					backgroundColor : this.finalConfig.backgroundColor
-				}, o : {duration : 500, easing : this.finalConfig.easing}},
+					width : this.dialogConfig.width +"px",
+					height : this.dialogConfig.height + "px",
+					borderRadius : this.dialogConfig.borderRadius,
+					backgroundColor : this.dialogConfig.backgroundColor
+				}, o : {duration : 500, easing : this.buttonConfig.easing}},
 
-				{e : this.$content, p : "fadeIn", o : {duration : 300}}
+				{e : this.$dialog, p : "fadeIn", o : {duration : 300}}
 			];
 
 			$.Velocity.RunSequence(loadingSequence);
@@ -76,30 +89,28 @@
 
 		// Animates the container out to its initial state
 		this.animateOut = function() {
+			this.setIcon();
 			var leavingSequence = [
-				{e : this.$content, p : "fadeOut", o : {duration : 150}},
+				{e : this.$dialog, p : "fadeOut", o : {duration : 150}},
 				{e : this.$container, p :{
-					width : this.initialConfig.width + "px",
-					height : this.initialConfig.height + "px",
-					backgroundColor : this.initialConfig.backgroundColor,
+					width : this.buttonConfig.width + "px",
+					height : this.buttonConfig.height + "px",
+					backgroundColor : this.buttonConfig.backgroundColor,
 					// For a perfect circle we will give border radius the same value as height and width
-					borderRadius : this.initialConfig.width
-				}, o : {easing : this.finalConfig.easing, duration : 200}}
+					borderRadius : this.buttonConfig.width
+				}, o : {easing : this.buttonConfig.easing, duration : 200}}
 
 			];
 
 			$.Velocity.RunSequence(leavingSequence);
 		};
 
-		// Close the dialog and return back to icon mode, is triggered
-		// when clicked on close button or when clicked outside the dialog
 		this.closeDialog = function() {
 			this.animateOut();
-			this.setIcon();
 		};
 
 		this.setIcon = function() {
-			this.$container.css('background-image', 'url(' + this.finalConfig.icon + ')');
+			this.$container.css('background-image', 'url(' + this.buttonConfig.icon + ')');
 			this.$container.css('cursor', 'pointer');
 		};
 
