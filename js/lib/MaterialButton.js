@@ -39,9 +39,7 @@
 			this.$content.hide();
 			// Handle Click on the whole container
 			this.$container.on('click', function(event) {
-				that.animateIn().then(function() {
-					that.$content.fadeIn();
-				});
+				that.animateIn();
 				event.stopPropagation();
 			});
 
@@ -61,44 +59,42 @@
 
 		// Animates in the container, Returns a promise to chain animation
 		this.animateIn = function() {
-			var that = this;
-			return new Promise(function(resolve, reject){
-				that.removeIcon();
-				that.$container.velocity({
-					width : that.finalConfig.width +"px",
-					height : that.finalConfig.height + "px",
-					borderRadius : "3px",
-					backgroundColor : that.finalConfig.backgroundColor
-				},{
-					complete : function() {
-						// resolve the promise on animation complete
-						resolve();
-					},
-					duration : 500,
-					easing : that.finalConfig.easing
-				});
-			});
+			this.removeIcon();
+			var loadingSequence = [
+				{e : this.$container, p : {
+					width : this.finalConfig.width +"px",
+					height : this.finalConfig.height + "px",
+					borderRadius : "4px",
+					backgroundColor : this.finalConfig.backgroundColor
+				}, o : {duration : 500, easing : this.finalConfig.easing}},
 
+				{e : this.$content, p : "fadeIn", o : {duration : 300}}
+			];
+
+			$.Velocity.RunSequence(loadingSequence);
 		};
 
 		// Animates the container out to its initial state
 		this.animateOut = function() {
-			this.$container.velocity({
-				width : this.initialConfig.width + "px",
-				height : this.initialConfig.height + "px",
-				backgroundColor : this.initialConfig.backgroundColor,
-				// For a perfect circle we will give border radius the same value as height and width
-				borderRadius : this.initialConfig.width
-			},{easing : this.finalConfig.easing, duration : 300});
+			var leavingSequence = [
+				{e : this.$content, p : "fadeOut", o : {duration : 150}},
+				{e : this.$container, p :{
+					width : this.initialConfig.width + "px",
+					height : this.initialConfig.height + "px",
+					backgroundColor : this.initialConfig.backgroundColor,
+					// For a perfect circle we will give border radius the same value as height and width
+					borderRadius : this.initialConfig.width
+				}, o : {easing : this.finalConfig.easing, duration : 200}}
+
+			];
+
+			$.Velocity.RunSequence(leavingSequence);
 		};
 
 		// Close the dialog and return back to icon mode, is triggered
 		// when clicked on close button or when clicked outside the dialog
 		this.closeDialog = function() {
-			var that = this;
-			this.$content.fadeOut("fast",function() {
-				that.animateOut();
-			});
+			this.animateOut();
 			this.setIcon();
 		};
 
