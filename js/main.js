@@ -3,8 +3,9 @@
 var materialDelete = MaterialButton.getInstance($('#deleteBox'));
 // Initalize the dialog with final States icon and easing
 materialDelete.init({
-	width : 250,
-	height : 100,
+	width : 70,
+	height : 70,
+	backgroundColor : "#EB1220",
 	icon : './images/icon_delete.png',
 	easing : 'easeInOutQuint'
 });
