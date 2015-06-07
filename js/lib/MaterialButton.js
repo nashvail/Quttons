@@ -16,10 +16,13 @@
 		// Cache the close button if it exists
 		this.$closeButton = this.$container.find('.close');
 
-		// Configuration of the popped up dialog, direct child of
+		// When button is expanded into a dialog isExpanded holds true
+		this.isExpanded = false;
+
+		// Configuration of the popped up dialog
 		this.dialogConfig = {
-			width : this.$dialog.width(),
-			height : this.$dialog.height(),
+			width : this.$dialog.outerWidth(),
+			height : this.$dialog.outerHeight(),
 			backgroundColor : toHex(this.$dialog.css('background-color')),
 			borderRadius : this.$dialog.css('border-radius')
 		};
@@ -52,7 +55,8 @@
 			var that = this;
 			// Handle Click on the whole container
 			this.$container.on('click', function(event) {
-				that.animateIn();
+				if(!that.isExpanded)
+					that.openDialog();
 				event.stopPropagation();
 			});
 
@@ -70,9 +74,31 @@
 
 		};
 
-		// Animates in the container, Returns a promise to chain animation
-		this.animateIn = function() {
+
+		this.closeDialog = function() {
+			this.setIcon();
+			this.animateOut();
+			this.isExpanded = false;
+		};
+
+		this.openDialog = function() {
 			this.removeIcon();
+			this.animateIn();
+			this.isExpanded = true;
+		};
+
+		this.setIcon = function() {
+			this.$container.css('background-image', 'url(' + this.buttonConfig.icon + ')');
+			this.$container.css('cursor', 'pointer');
+		};
+
+		this.removeIcon = function() {
+			this.$container.css('background-image', 'none');
+			this.$container.css('cursor', 'auto');
+		};
+
+		// Animates the button into dialog
+		this.animateIn = function() {
 			var loadingSequence = [
 				{e : this.$container, p : {
 					width : this.dialogConfig.width +"px",
@@ -87,9 +113,8 @@
 			$.Velocity.RunSequence(loadingSequence);
 		};
 
-		// Animates the container out to its initial state
+		// Animtes dialog into button
 		this.animateOut = function() {
-			this.setIcon();
 			var leavingSequence = [
 				{e : this.$dialog, p : "fadeOut", o : {duration : 150}},
 				{e : this.$container, p :{
@@ -105,19 +130,6 @@
 			$.Velocity.RunSequence(leavingSequence);
 		};
 
-		this.closeDialog = function() {
-			this.animateOut();
-		};
-
-		this.setIcon = function() {
-			this.$container.css('background-image', 'url(' + this.buttonConfig.icon + ')');
-			this.$container.css('cursor', 'pointer');
-		};
-
-		this.removeIcon = function() {
-			this.$container.css('background-image', 'none');
-			this.$container.css('cursor', 'auto');
-		};
 
 	}
 
