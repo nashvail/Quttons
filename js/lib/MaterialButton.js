@@ -40,6 +40,7 @@
 		this.init = function (buttonConfig) {
 
 			$.extend(this.buttonConfig, buttonConfig);
+			
 			this.$dialog.hide();
 
 			// Set up the icon and other properties of the div
@@ -52,13 +53,13 @@
 			});
 
 
+
 			var that = this;
 			// Handle Click on the whole container
 			this.$container.on('click', function(event) {
 				if(!that.isExpanded){
 					that.openDialog();
 				}
-				event.stopPropagation();
 			});
 
 			// Handle click on the close button
@@ -69,10 +70,11 @@
 
 
 			// If clicked out side the material box do same thing as closing the dialog
-			$(document).on('click', function() {
-				if(!$(event.target).closest(this.$container).length){
-					if(that.isExpanded)
+			$(document).on('click', function(event) {
+				if(!$(event.target).closest(that.$container.selector).length){
+					if(that.isExpanded){
 						that.closeDialog();
+					}
 				}
 			});
 
