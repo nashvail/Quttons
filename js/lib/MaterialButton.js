@@ -55,8 +55,9 @@
 			var that = this;
 			// Handle Click on the whole container
 			this.$container.on('click', function(event) {
-				if(!that.isExpanded)
+				if(!that.isExpanded){
 					that.openDialog();
+				}
 				event.stopPropagation();
 			});
 
@@ -69,7 +70,10 @@
 
 			// If clicked out side the material box do same thing as closing the dialog
 			$(document).on('click', function() {
-				that.closeDialog();
+				if(!$(event.target).closest(this.$container).length){
+					if(that.isExpanded)
+						that.closeDialog();
+				}
 			});
 
 		};

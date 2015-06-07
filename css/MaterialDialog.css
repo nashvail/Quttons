@@ -4,7 +4,6 @@
 }
 .materialButton{
 	box-sizing : content-box !important;
-	position : relative !important;
 	background-repeat : no-repeat !important;
 	background-position: center center !important;
 	box-shadow:  0 3px 6px 0 rgba(0, 0, 0, 0.3);

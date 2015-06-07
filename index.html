@@ -5,13 +5,27 @@
 	<title>Document</title>
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/MaterialDialog.css">
-	<link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+	<!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'> -->
 </head>
 <body>
+	
+	<div class="materialButton" id = "uploadButton">
+		<div id="uploadDialog">
+			<center>
+			<div class="urlField">
+				<input type="text" id = "fileUrl" placeholder = "Enter URL">
+			</div>
+			</center>
+			<div class="uploadButton">
+				Choose a file to upload
+			</div>
+		</div>
+	</div>
 
-	<div class="materialButton" id = "confirmButton">
-		<div class="confirmDialog">
-			<h2>Confirm This?</h2>	
+	<div class="materialButton" id = "deleteButton">
+		<div id="deleteDialog">
+			<h2>Sure?</h2>
+			<div class="confirm">Yes, delete this file</div>
 		</div>
 	</div>
 	
