@@ -2,7 +2,7 @@
 	margin : 0;
 	padding : 0;
 }
-.materialDialog {
+.materialButton{
 	box-sizing : content-box !important;
 	position : relative !important;
 	background-repeat : no-repeat !important;
@@ -11,7 +11,7 @@
 	cursor : auto;
 }
 
-.materialDialog .close {
+.materialButton.close {
 	position : absolute !important;
 	cursor : pointer;
 }
