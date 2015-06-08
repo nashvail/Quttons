@@ -1,0 +1,16 @@
+* {
+	margin : 0;
+	padding : 0;
+}
+.materialButton{
+	box-sizing : content-box !important;
+	background-repeat : no-repeat !important;
+	background-position: center center !important;
+	box-shadow:  0 3px 6px 0 rgba(0, 0, 0, 0.3);
+	cursor : auto;
+}
+
+.materialButton.close {
+	position : absolute !important;
+	cursor : pointer;
+}

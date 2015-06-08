@@ -1,0 +1,102 @@
+$color_confirm_btn : #EB1220
+$color_upload_button : #498AF2
+*
+	box-sizing : border-box
+	margin : 0
+	padding : 0
+body
+	background-color : white
+
+.buttonCollection
+	width : 900px
+	height : auto
+	margin : 150px auto 0px auto
+	padding : 10px
+	display : flex
+	flex-direction : row
+	flex-wrap : wrap
+	align-items : flex-start
+	align-content : flex-start
+
+.collectionPart
+	margin : 5px
+	margin-right : 25px
+
+#uploadDialog
+	font-family : "Roboto"
+	width : 300px
+	height : 180px 
+	border-radius : 4px
+	background-color : #fff
+	padding : 10px
+	box-shadow : 0px 3px 5px rgba(0, 0, 0, 0.2)
+	h2
+		text-align : center
+		font-weight : normal
+		padding : 10px
+		font-size : 1.2em
+		font-family : "Source Sans Pro"
+
+#fileUrl
+	width : 100%
+	height : 30px
+	border-radius : 2px
+	border : 1px solid #afafaf
+	padding : 9px
+	font-size : 1em
+
+.urlField 
+	display : block 
+	width : 83%
+	height : 30px
+	padding : 5px
+	margin : 10px auto 0 auto
+
+.uploadButton 
+	width : 80%
+	height : 40px
+	background-color : $color_upload_button
+	border : 1px solid darken($color_upload_button, 10%)
+	border-bottom : 1px solid darken($color_upload_button, 15%)
+	color : white
+	text-align : center
+	padding : 9px
+	cursor : pointer
+	border-radius : 3px
+	margin : 0 auto
+	box-shadow : 0px 1px 2px rgba(0, 0, 0, 0.14)
+	margin-top : 20px
+
+
+#deleteDialog
+	width : 220px
+	height : 100px
+	border-radius : 4px
+	background-color : #fff
+	h2
+		padding : 10px
+		font-weight : normal
+		text-align : center
+		font-family : "Roboto"
+
+
+.confirm
+	display : block
+	width : 70px
+	height : 30px
+	background-color : green
+	cursor : pointer
+	color : white
+	background-color : $color_confirm_btn
+	width : 150px
+	border : 1px solid darken($color_confirm_btn, 10%)
+	margin : 0 auto
+	font-family : "Roboto"
+	line-height : 20px
+	border-radius : 4px
+	padding: 5px
+	text-align : center
+	margin-top : 5px
+	&:hover 
+		box-shadow : 0px 1px 2px rgba(0, 0, 0, 0.1)
+
