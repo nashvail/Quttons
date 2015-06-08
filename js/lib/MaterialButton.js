@@ -5,6 +5,7 @@
 
 	// Factory method for producing new Material Dialog objects
 	window.MaterialButton.getInstance = function(jQueryDOMElement) {
+		if(jQueryDOMElement === null) throw new Error("Passed in element doesn't exist in DOM");
 		return new MaterialButton(jQueryDOMElement);
 	};
 	
@@ -112,6 +113,8 @@
 					height : this.dialogConfig.height + "px",
 					borderRadius : this.dialogConfig.borderRadius,
 					backgroundColor : this.dialogConfig.backgroundColor,
+					translateX : -1 * ((this.dialogConfig.width/2) - (this.buttonConfig.width/2)) + "px",
+					translateY : -1 * (this.dialogConfig.height/2 - this.buttonConfig.width/2) + "px"
 				}, o : {duration : 500, easing : this.buttonConfig.easing}},
 
 				{e : this.$dialog, p : "fadeIn", o : {duration : 300}}
@@ -128,7 +131,9 @@
 					height : this.buttonConfig.height + "px",
 					backgroundColor : this.buttonConfig.backgroundColor,
 					// For a perfect circle we will give border radius the same value as height and width
-					borderRadius : this.buttonConfig.width
+					borderRadius : this.buttonConfig.width,
+					translateX : "0px",
+					translateY : "0px"
 				}, o : {easing : this.buttonConfig.easing, duration : 200}}
 
 			];
