@@ -8,7 +8,7 @@ materialUploadBTN.init({
 });
 
 
-// For the delete button
+// // For the delete button
 var materialDeleteButton = MaterialButton.getInstance($('#deleteButton'));
 materialDeleteButton.init({
 	icon : './images/icon_delete.png',
