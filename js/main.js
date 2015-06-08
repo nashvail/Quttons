@@ -15,6 +15,10 @@ materialDeleteButton.init({
 	backgroundColor : "#EB1220"
 });
 
-$('.uploadButton').on('click', function() {
-	console.log("Choose a file to upload");
+// For the Sharing button
+var materialShareButton = MaterialButton.getInstance($('#commentButton'));
+materialShareButton.init({
+	backgroundColor : "#41AAF1",
+	icon : './images/icon_comment.png'	
 });
+
