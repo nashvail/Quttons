@@ -5,6 +5,7 @@
 
 	// Factory method for producing new Material Dialog objects
 	window.MaterialButton.getInstance = function(jQueryDOMElement) {
+		if(jQueryDOMElement === null) throw new Error("Passed in element doesn't exist in DOM");
 		return new MaterialButton(jQueryDOMElement);
 	};
 	
@@ -106,34 +107,63 @@
 
 		// Animates the button into dialog
 		this.animateIn = function() {
-			var loadingSequence = [
+			var that = this;
+			var inSequence  = [
 				{e : this.$container, p : {
 					width : this.dialogConfig.width +"px",
 					height : this.dialogConfig.height + "px",
 					borderRadius : this.dialogConfig.borderRadius,
 					backgroundColor : this.dialogConfig.backgroundColor,
-				}, o : {duration : 500, easing : this.buttonConfig.easing}},
+					// Translate the dialog to make it look like it is exploding from middle
+					translateX : -1 * ((this.dialogConfig.width/2) - (this.buttonConfig.width/2)) + "px",
+					translateY : -1 * (this.dialogConfig.height/2 - this.buttonConfig.height/2) + "px"
+				}, o : {
+					duration : 500, 
+					easing : this.buttonConfig.easing,
+					begin : function() {
+						that.$container.after(that.$container.clone().css('visibility', 'hidden'));
+						that.$container.css({
+							'position' : 'absolute',
+							'z-index' : '10000'
+						});
+
+					}
+				}},
 
 				{e : this.$dialog, p : "fadeIn", o : {duration : 300}}
 			];
-			$.Velocity.RunSequence(loadingSequence);
+			$.Velocity.RunSequence(inSequence );
 		};
 
 		// Animtes dialog into button
 		this.animateOut = function() {
-			var leavingSequence = [
+			var that = this;
+			var outSequence = [
 				{e : this.$dialog, p : "fadeOut", o : {duration : 150}},
 				{e : this.$container, p :{
 					width : this.buttonConfig.width + "px",
 					height : this.buttonConfig.height + "px",
 					backgroundColor : this.buttonConfig.backgroundColor,
 					// For a perfect circle we will give border radius the same value as height and width
-					borderRadius : this.buttonConfig.width
-				}, o : {easing : this.buttonConfig.easing, duration : 200}}
+					borderRadius : this.buttonConfig.width,
+					// Neutralize movement of button after it translated to maintain position
+					translateX : "0px",
+					translateY : "0px"
+				}, o : {
+					easing : this.buttonConfig.easing, 
+					duration : 200,
+					complete : function() {
+						that.$container.css({
+							'position' : 'static',
+							'z-index' : '0'
+						});
+						that.$container.next().remove();
+					}
+				}}
 
 			];
 
-			$.Velocity.RunSequence(leavingSequence);
+			$.Velocity.RunSequence(outSequence);
 		};
 
 
@@ -150,6 +180,5 @@
 	    }
 	    return '#' + parts.join('');
 	}
-
 
 })();
