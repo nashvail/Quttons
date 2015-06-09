@@ -1,15 +1,15 @@
 (function() {
 	'use strict';
 	// Exporting module to global
-	window.MaterialButton = {};
+	window.Qutton= {};
 
 	// Factory method for producing new Material Dialog objects
-	window.MaterialButton.getInstance = function(jQueryDOMElement) {
+	window.Qutton.getInstance = function(jQueryDOMElement) {
 		if(jQueryDOMElement === null) throw new Error("Passed in element doesn't exist in DOM");
-		return new MaterialButton(jQueryDOMElement);
+		return new Qutton(jQueryDOMElement);
 	};
 	
-	function MaterialButton(jQueryDOMElement) {
+	function Qutton(jQueryDOMElement) {
 
 		// Cache the important elements as jQuery object
 		this.$container = jQueryDOMElement;
@@ -116,7 +116,7 @@
 					backgroundColor : this.dialogConfig.backgroundColor,
 					// Translate the dialog to make it look like it is exploding from middle
 					translateX : -1 * ((this.dialogConfig.width/2) - (this.buttonConfig.width/2)) + "px",
-					translateY : -1 * (this.dialogConfig.height/2 - this.buttonConfig.height/2) + "px"
+					translateY : -0.5 * (this.dialogConfig.height/2 - this.buttonConfig.height/2) + "px"
 				}, o : {
 					duration : 500, 
 					easing : this.buttonConfig.easing,
