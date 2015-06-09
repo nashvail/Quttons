@@ -5,6 +5,8 @@ $color_submit_button : #03A9F4
 	box-sizing : border-box
 	margin : 0
 	padding : 0
+	font-family : "Roboto"
+
 body
 	background-color : white
 
@@ -21,15 +23,27 @@ body
 	align-content : flex-start
 
 
-.collectionPart
-	margin : 5px
-	margin-right : 30px
+.qutton
+	margin-right : 35px
+	&:last-child
+		margin-right : 0
 
-.collectionPart:last-child 
-	margin-right : 0px	
+.button_basic 
+	display : block
+	width : 250px
+	height : 70px
+	box-shadow : 0px 1px 2px rgba(0, 0, 0, 0.15)
+	text-align : center
+	line-height : 70px
+	border-radius : 4px
+	font-family : "Roboto"
+	cursor : pointer
+	color : #fff
+	&:hover
+		box-shadow : 0px 1px 4px rgba(0, 0, 0, 0.2)
+
 
 #uploadDialog
-	font-family : "Roboto"
 	width : 300px
 	height : 180px 
 	border-radius : 4px
@@ -41,36 +55,33 @@ body
 		font-weight : normal
 		padding : 10px
 		font-size : 1.2em
-		font-family : "Source Sans Pro"
+	input#fileUrl
+		width : 100%
+		height : 30px
+		border-radius : 2px
+		border : 1px solid #afafaf
+		padding : 9px
+		font-size : 1em
+	.urlField 
+		display : block 
+		width : 83%
+		height : 30px
+		padding : 5px
+		margin : 10px auto 0 auto
 
-#fileUrl
-	width : 100%
-	height : 30px
-	border-radius : 2px
-	border : 1px solid #afafaf
-	padding : 9px
-	font-size : 1em
 
-.urlField 
-	display : block 
-	width : 83%
-	height : 30px
-	padding : 5px
-	margin : 10px auto 0 auto
 
-.uploadButton 
+#button_basic_upload
+	@extend .button_basic
 	width : 80%
 	height : 40px
+	line-height : 22px
 	background-color : $color_upload_button
 	border : 1px solid darken($color_upload_button, 10%)
 	border-bottom : 1px solid darken($color_upload_button, 15%)
 	color : white
-	text-align : center
 	padding : 9px
-	cursor : pointer
-	border-radius : 3px
 	margin : 0 auto
-	box-shadow : 0px 1px 2px rgba(0, 0, 0, 0.14)
 	margin-top : 20px
 
 	
@@ -86,38 +97,16 @@ body
 		font-family : "Roboto"
 
 
-.confirm
-	display : block
-	width : 70px
-	height : 30px
+#button_basic_confirm_delete
+	@extend .button_basic
+	width : 180px
+	height : 35px
 	background-color : green
-	cursor : pointer
-	color : white
 	background-color : $color_confirm_button
-	width : 150px
 	border : 1px solid darken($color_confirm_button, 10%)
 	margin : 0 auto
-	font-family : "Roboto"
-	line-height : 20px
-	border-radius : 4px
-	padding: 5px
-	text-align : center
+	line-height : 33px
 	margin-top : 5px
-	&:hover 
-		box-shadow : 0px 1px 2px rgba(0, 0, 0, 0.1)
-
-.button 
-	display : block
-	width : 250px
-	height : 70px
-	box-shadow : 0px 1px 2px rgba(0, 0, 0, 0.15)
-	text-align : center
-	line-height : 70px
-	border-radius : 4px
-	font-family : "Roboto"
-	cursor : pointer
-	&:hover
-		box-shadow : 0px 1px 4px rgba(0, 0, 0, 0.2)
 
 
 #commentDialog
@@ -133,20 +122,20 @@ body
 		margin : 0 auto
 		padding : 8px
 		font-size : 1.2em
-		font-family : "Lato"
 		border-radius : 2px
 		border : 1px solid #afafaf
+		resize : none
 		&:focus 
 			outline : none
 
 
-#button_submit_comment
-	@extend .button
+#button_basic_submit_comment
+	@extend .button_basic
 	width : 100%
 	height : 50px
 	line-height : 50px
 	color : white
 	font-size : 1em
 	margin-top : 15px
-	background-color : $color_submit_button
-	border : 1px solid darken($color_submit_button, 10%)
+	background-color : $color_upload_button
+	border : 1px solid darken($color_upload_button, 10%)

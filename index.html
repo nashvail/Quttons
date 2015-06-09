@@ -2,51 +2,51 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Quttons</title>
 	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/MaterialButton.css">
+	<link rel="stylesheet" href="css/Quttons.css">
 	<!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'> -->
 </head>
 <body>
 	
 	<div class="buttonCollection">
-		<!-- Upload Button -->
-		<div class="materialButton collectionPart" id = "uploadButton">
+		<!-- Upload Qutton -->
+		<div class="qutton" id = "qutton_upload">
 			<div id="uploadDialog">
 				<h2>Upload a new file</h2>
 				<div class="urlField">
 					<input type="text" id = "fileUrl" placeholder = "Enter URL">
 				</div>
-				<center><div  class="uploadButton"> Choose a file to upload
+				<center><div id="button_basic_upload"> Choose a file to upload
 				</div></center>
 			</div>
 		</div>
-		<!-- End Upload Button -->
+		<!-- End Upload Qutton -->
 
-		<!-- Delete Button -->
-		<div class="materialButton collectionPart" id = "deleteButton">
+		<!-- Delete Qutton -->
+		<div class="qutton" id = "qutton_delete">
 			<div id="deleteDialog">
 				<h2>Sure?</h2>
-				<div class="confirm">Yes, delete this file</div>
+				<div id="button_basic_confirm_delete">Yes, delete this file</div>
 			</div>
 		</div>
-		<!-- End Delete Button -->
+		<!-- End Delete Qutton -->
 
-		<!-- Sharing Button -->
-		<div class="materialButton collectionPart" id="commentButton">
+		<!-- Comment Qutton -->
+		<div class="qutton" id = "qutton_comment">
 			<div id="commentDialog">
 				<textarea name="comment" id="commentInput" placeholder = "Your thoughts..."></textarea>
-				<div id="button_submit_comment">Post Comment</div>
+				<div id="button_basic_submit_comment">Post Comment</div>
 			</div>
 		</div>
-		<!-- End Sharing Button -->
+		<!-- End Comment Qutton -->
 		
 	</div>
 	
 	<script type = "text/javascript" src = "js/lib/jquery-1.11.2.min.js"></script>
 	<script src="js/lib/velocity.js"></script>
 	<script src = "js/lib/velocity.ui.js" type = "text/javascript"></script>
-	<script src="js/lib/MaterialButton.js" type = "text/javascript"></script>
+	<script src="js/lib/Quttons.js" type = "text/javascript"></script>
 	<script type = "text/javascript" src = "js/main.js"></script>
 </body>
 </html>

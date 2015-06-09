@@ -2,7 +2,7 @@
 	margin : 0;
 	padding : 0;
 }
-.materialButton{
+.qutton{
 	box-sizing : content-box !important;
 	background-repeat : no-repeat !important;
 	background-position: center center !important;
@@ -10,7 +10,7 @@
 	cursor : auto;
 }
 
-.materialButton.close {
+.qutton.close {
 	position : absolute !important;
 	cursor : pointer;
 }
