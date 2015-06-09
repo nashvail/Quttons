@@ -4,7 +4,7 @@
 * With this plugin you can hide any div behind a Quantum [Paper] Button or Qutton
 
 [WIP] Installation instructions coming soon.
-Meanwhile check out this [demo(beta)](http://nashvail.github.io/MaterialButton)
+Meanwhile check out this [demo(beta)](http://nashvail.github.io/Quttons)
 
 * Slo-Mo Demo
 
