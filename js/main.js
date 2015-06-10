@@ -1,24 +1,29 @@
-'use strict';
+(function() {
+	
+	'use strict';
 
-// For the upload button
-var materialUploadBTN = MaterialButton.getInstance($('#uploadButton'));
-materialUploadBTN.init({
-	width : 60,
-	height : 60,
-	backgroundColor : "#917466",
-	icon : './images/icon_upload.png'
-});
+	// Initialize the buttons
+
+	// For the upload button
+	var quttonUpload = Qutton.getInstance($('#qutton_upload'));
+	quttonUpload.init({
+		icon : './images/icon_upload.png',
+		backgroundColor : "#917466"
+	});
 
 
-// For the delete button
-var materialDeleteButton = MaterialButton.getInstance($('#deleteButton'));
-materialDeleteButton.init({
-	width : 60,
-	height : 60,
-	icon : './images/icon_delete.png',
-	backgroundColor : "#EB1220"
-});
+	// // For the delete button
+	var quttonDelete = Qutton.getInstance($('#qutton_delete'));
+	quttonDelete.init({
+		icon : './images/icon_delete.png',
+		backgroundColor : "#EB1220"
+	});
 
-$('.uploadButton').on('click', function() {
-	console.log("Choose a file to upload");
-});
+	// For the Sharing button
+	var quttonComment= Qutton.getInstance($('#qutton_comment'));
+	quttonComment.init({
+		icon : './images/icon_comment.png',
+		backgroundColor : "#41AAF1"
+	});
+
+})();
