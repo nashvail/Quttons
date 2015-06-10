@@ -117,8 +117,8 @@
 					borderRadius : this.dialogConfig.borderRadius,
 					backgroundColor : this.dialogConfig.backgroundColor,
 					// Translate the dialog to make it look like it is exploding from middle
-					translateX : -1 * ((this.dialogConfig.width/2) - (this.buttonConfig.width/2)) + "px",
-					translateY : -0.5 * (this.dialogConfig.height/2 - this.buttonConfig.height/2) + "px"
+					translateX : -1 * (((this.dialogConfig.width/2) - (this.buttonConfig.width/2)) - this.bounds().X) + "px",
+					translateY : -0.5 * ((this.dialogConfig.height/2 - this.buttonConfig.height/2) - this.bounds().Y)+ "px"
 				}, o : {
 					duration : 500, 
 					easing : this.buttonConfig.easing,
@@ -128,12 +128,6 @@
 							'position' : 'absolute',
 							'z-index' : '10000'
 						});
-						// we're trying to predict the position after explosion
-						console.log(that.bounds());
-					},
-
-					complete : function() {
-						console.log(that.$container.position());		
 					}
 
 				}},
@@ -176,18 +170,50 @@
 
 		// Check if the explosion of Qutton is within the document if there is a place for it 
 		this.bounds = function() {
+			var $window = $(window);
+			var windowWidth = $window.width();
+			var windowHeight = $window.height();
 			var position = this.$container.position();	
-			var topCenter = {
+			var buttonCenterTop = {
 				top : position.top,
 				left : position.left + (this.buttonConfig.width/2)
 			};
 
-			var finalPositions = {
-				top : topCenter.top - ( 0.5 * (this.dialogConfig.height/2 - this.buttonConfig.height/2)),
-				left : topCenter.left - (this.dialogConfig.width/2)
+			// Coordinates of the dialog once it opens
+			var dialogCoords = {
+				top : buttonCenterTop.top - ( 0.5 * (this.dialogConfig.height/2 - this.buttonConfig.height/2)),
+				left : buttonCenterTop.left - (this.dialogConfig.width/2),
 			};
 
-			return finalPositions;
+			// How much the dialog extends beyond the document
+			var extend  = {
+				left : dialogCoords.left,
+				right : windowWidth - (dialogCoords.left + this.dialogConfig.width),
+				top : dialogCoords.top,
+				bottom : windowHeight - (dialogCoords.top + this.dialogConfig.height)
+			};
+
+			// Amount to translate in X and Y if possible to bring dialog in bounds of document
+			var translateInBounds = {
+				X : this.calculateTranslateAmount(extend.left, extend.right), 
+				Y : this.calculateTranslateAmount(extend.top, extend.bottom) 
+			};
+
+			return translateInBounds;
+		};
+
+		this.calculateTranslateAmount = function(extensionSideOne, extensionSideTwo) {
+			// If both sides extend beyond the document you cannot fit it inside, so no need to translate
+			// this is a sample check to see if the dialog cannot exist in bound it will be polished 
+			// later
+			if((extensionSideOne < 0 && extensionSideTwo < 0) || 
+			   (extensionSideOne > 0 && extensionSideTwo > 0 )) {
+				return 0;	
+			}
+
+			// If any one of the side extends beyond the document
+			return (extensionSideOne < 0 ? extensionSideOne * (-1) : extensionSideTwo * (-1));
+
 		}
 
 	}
