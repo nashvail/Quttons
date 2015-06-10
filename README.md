@@ -13,4 +13,4 @@ Meanwhile check out this [demo(beta)](http://nashvail.github.io/Quttons)
 
 #Dependencies 
 * jQuery
-* Velocity.js with UI Pack
+* [Velocity.js](https://raw.githubusercontent.com/julianshapiro/velocity/master/velocity.js) with [UI Pack](https://raw.githubusercontent.com/julianshapiro/velocity/master/velocity.ui.js)
