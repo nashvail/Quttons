@@ -1,4 +1,10 @@
 (function() {
+
+	/********************************************
+	* 	              Quttons.js  			    *
+	* Quttons are buttons made of Quantum Paper *
+	*********************************************/
+
 	'use strict';
 	// Exporting module to global
 	window.Qutton= {};
@@ -13,6 +19,7 @@
 
 		// Cache the important elements as jQuery object
 		this.$container = jQueryDOMElement;
+		// Dialog is alias of the box that pops up on clicking the Qutton
 		this.$dialog = this.$container.children();
 		// Cache the close button if it exists
 		this.$closeButton = this.$container.find('.close');
