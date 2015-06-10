@@ -103,7 +103,8 @@ body {
   width: 380px;
   height: 250px;
   border-radius: 4px;
-  padding: 15px; }
+  padding: 15px;
+  background-color: #fff; }
   #commentDialog textarea#commentInput {
     display: block;
     width: 100%;
