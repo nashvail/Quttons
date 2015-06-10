@@ -110,15 +110,20 @@
 		// Animates the button into dialog
 		this.animateIn = function() {
 			var that = this;
+			// Translate amount to make the dialog look like exploding from desired location
+			var translate = {
+				X : -1 * (this.dialogConfig.width/2 - this.buttonConfig.width/2),
+				Y : -0.5 * (this.dialogConfig.height/2 - this.buttonConfig.width/2)
+			};
+
 			var inSequence  = [
 				{e : this.$container, p : {
 					width : this.dialogConfig.width +"px",
 					height : this.dialogConfig.height + "px",
 					borderRadius : this.dialogConfig.borderRadius,
 					backgroundColor : this.dialogConfig.backgroundColor,
-					// Translate the dialog to make it look like it is exploding from middle
-					translateX : -1 * (((this.dialogConfig.width/2) - (this.buttonConfig.width/2)) - this.bounds().X) + "px",
-					translateY : -0.5 * ((this.dialogConfig.height/2 - this.buttonConfig.height/2) - this.bounds().Y)+ "px"
+					translateX : translate.X + this.keepInBounds().X + "px",
+					translateY : translate.Y + this.keepInBounds().Y + "px"
 				}, o : {
 					duration : 500, 
 					easing : this.buttonConfig.easing,
@@ -168,12 +173,17 @@
 			$.Velocity.RunSequence(outSequence);
 		};
 
-		// Check if the explosion of Qutton is within the document if there is a place for it 
-		this.bounds = function() {
+		// Check if the explosion of Qutton is within the document bounds.
+		// Returns an object containing values to translate in X or Y direction in order to 
+		// keep the dialog in bounds of the document on explosion.
+		this.keepInBounds= function() {
 			var $window = $(window);
 			var windowWidth = $window.width();
 			var windowHeight = $window.height();
+
 			var position = this.$container.position();	
+
+			// Coordinates of top center of Qutton before it converts to a a dialog
 			var buttonCenterTop = {
 				top : position.top,
 				left : position.left + (this.buttonConfig.width/2)
@@ -202,17 +212,15 @@
 			return translateInBounds;
 		};
 
-		this.calculateTranslateAmount = function(extensionSideOne, extensionSideTwo) {
-			// If both sides extend beyond the document you cannot fit it inside, so no need to translate
-			// this is a sample check to see if the dialog cannot exist in bound it will be polished 
-			// later
-			if((extensionSideOne < 0 && extensionSideTwo < 0) || 
-			   (extensionSideOne > 0 && extensionSideTwo > 0 )) {
+		// Calculates and returns the amount to translate the dialog to keep in bounds of the window
+		this.calculateTranslateAmount = function(extendSideOne, extendSideTwo) {
+			if((extendSideOne < 0 && extendSideTwo < 0) || 
+			   (extendSideOne > 0 && extendSideTwo > 0 )) { 
 				return 0;	
 			}
 
-			// If any one of the side extends beyond the document
-			return (extensionSideOne < 0 ? extensionSideOne * (-1) : extensionSideTwo * (-1));
+			// We want to translate in opposite direction of extension
+			return (extendSideOne < 0 ? -extendSideOne : extendSideTwo);
 
 		}
 
