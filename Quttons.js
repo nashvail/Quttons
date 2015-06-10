@@ -1,7 +1,7 @@
 (function() {
 
 	/********************************************
-	* 	              Quttons.js  	    *
+	* 	              Quttons.js  			    *
 	* Quttons are buttons made of Quantum Paper *
 	*********************************************/
 
@@ -233,16 +233,12 @@
 
 	}
 
-
 	// Converts and returns RGB color code to Hex Code(String)
-	function toHex(colorRGB) {
-	    var parts = colorRGB.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-	    delete(parts[0]);
-	    for (var i = 1; i <= 3; i++) {
-	        parts[i] = parseInt(parts[i]).toString(16);
-	        if (parts[i].length == 1) parts[i] = '0' + parts[i];
-	    }
-	    return '#' + parts.join('');
+	function toHex(rgb){
+		 rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+		 return (rgb && rgb.length === 4) ? "#" +
+		  ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+		  ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+		  ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
 	}
-
 })();
