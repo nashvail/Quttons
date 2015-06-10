@@ -35,6 +35,8 @@ Meanwhile check out this [demo(beta)](http://nashvail.github.io/Quttons)
 #Step 2, Design your dialog :
 * Design your dialog box.
 * Design a div as you normally would, with all the css styles you want. You can put whatever you want inside your div.
+* You can also add event listeners to buttons inside the dialog as you normally would.
+* You can add a close button, just remember to give it a class of `close`.
 * Here is sample code for the Upload File Qutton from the [Demo Site](http://nashvail.github.io/Quttons).
 ```
 <div id="uploadDialog">
@@ -66,13 +68,13 @@ Meanwhile check out this [demo(beta)](http://nashvail.github.io/Quttons)
 * Inside `getInstance` you pass in the jQuery object r
 * `init` function takes in an object specifying the configuration of the button, following are currently supported
 
-|Argument   | Description  | Default  |   |   |
+|Argument   | Description  | Default  |
 |---|---|---|---|---|
-| icon  | Icon to be displayed in Qutton  | None  |   |   |
-|  backgroundColor | Background Color of Qutton  | #FE0000  |   |   |
-|  width | Width of the Qutton  | 60  |   |   |
-|  height | Height of the Qutton  | 60  |   |   |
-|  easing | Easing for the animation  | easeInOutQuint  |   |   |
+| icon  | Icon to be displayed in Qutton  | None  |
+|  backgroundColor | Background Color of Qutton  | #FE0000  |
+|  width | Width of the Qutton  | 60  | 
+|  height | Height of the Qutton  | 60  |  
+|  easing | Easing for the animation  | easeInOutQuint  | 
 
 
 
