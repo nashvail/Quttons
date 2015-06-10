@@ -63,7 +63,7 @@ Quantum paper is part of Google's new Material Design language.
 		backgroundColor : "#917466"
 	});
 ```
-* Inside `getInstance` you pass in the jQuery object r
+* Inside `getInstance` you pass in a jQuery object referencing the **custom id** you set up in previous step
 * `init` function takes in an object specifying the configuration of the button, following are currently supported
 
 |Argument   | Description  | Default  |
