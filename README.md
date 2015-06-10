@@ -4,8 +4,6 @@ Quantum paper is part of Google's new Material Design language.
 
 * With this plugin you can hide any div behind a Quantum [Paper] Button or Qutton
 
-[WIP] Installation instructions coming soon.
-Meanwhile check out this [demo(beta)](http://nashvail.github.io/Quttons)
 
 #[Online Demo](http://nashvail.github.io/Quttons)
 
@@ -32,7 +30,7 @@ Meanwhile check out this [demo(beta)](http://nashvail.github.io/Quttons)
 <link rel = "stylesheet" href = "Path/To/Quttons.css" />
 ```
 
-#Step 2, Design your dialog :
+##Step 2, Design your dialog :
 * Design your dialog box.
 * Design a div as you normally would, with all the css styles you want. You can put whatever you want inside your div.
 * You can also add event listeners to buttons inside the dialog as you normally would.
@@ -47,7 +45,7 @@ Meanwhile check out this [demo(beta)](http://nashvail.github.io/Quttons)
 </div>
 ```
 
-#Step 3, Wrap created dialog in a div
+##Step 3, Wrap created dialog in a div
 * Wrap dialog created in previous step in a div with class of ***qutton*** and one ***custom id which will be used to reference this qutton in your js file***.
 * Example 
 ```
@@ -56,7 +54,7 @@ Meanwhile check out this [demo(beta)](http://nashvail.github.io/Quttons)
 </div>
 ```
 
-#Step 4, Initialize Qutton
+##Step 4, Initialize Qutton
 * In your .js file start by referencing the qutton in the following manner. 
 ```
 	var quttonUpload = Qutton.getInstance($('#qutton_upload'));
