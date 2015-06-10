@@ -1,7 +1,7 @@
 (function() {
 
 	/********************************************
-	* 	              Quttons.js  			    *
+	* 	              Quttons.js  	    *
 	* Quttons are buttons made of Quantum Paper *
 	*********************************************/
 
