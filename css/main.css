@@ -23,6 +23,9 @@ body {
   .qutton:last-child {
     margin-right: 0; }
 
+.qutton_dialog {
+  display: none; }
+
 .button_basic, #button_basic_upload, #button_basic_confirm_delete, #button_basic_submit_comment {
   display: block;
   width: 250px;

@@ -25,8 +25,10 @@
 			width : this.$dialog.outerWidth(),
 			height : this.$dialog.outerHeight(),
 			backgroundColor : toHex(this.$dialog.css('background-color')),
-			borderRadius : this.$dialog.css('border-radius')
+			borderRadius : this.$dialog.css('border-radius'),
+			zIndex : this.$dialog.css('z-index')
 		};
+
 
 		// The width, height, icon, color of the formed button 
 		this.buttonConfig = {
@@ -126,8 +128,14 @@
 							'position' : 'absolute',
 							'z-index' : '10000'
 						});
+						// we're trying to predict the position after explosion
+						console.log(that.bounds());
+					},
 
+					complete : function() {
+						console.log(that.$container.position());		
 					}
+
 				}},
 
 				{e : this.$dialog, p : "fadeIn", o : {duration : 300}}
@@ -155,7 +163,7 @@
 					complete : function() {
 						that.$container.css({
 							'position' : 'static',
-							'z-index' : '0'
+							'z-index' : that.dialogConfig.zIndex
 						});
 						that.$container.next().remove();
 					}
@@ -166,6 +174,21 @@
 			$.Velocity.RunSequence(outSequence);
 		};
 
+		// Check if the explosion of Qutton is within the document if there is a place for it 
+		this.bounds = function() {
+			var position = this.$container.position();	
+			var topCenter = {
+				top : position.top,
+				left : position.left + (this.buttonConfig.width/2)
+			};
+
+			var finalPositions = {
+				top : topCenter.top - ( 0.5 * (this.dialogConfig.height/2 - this.buttonConfig.height/2)),
+				left : topCenter.left - (this.dialogConfig.width/2)
+			};
+
+			return finalPositions;
+		}
 
 	}
 
