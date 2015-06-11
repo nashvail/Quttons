@@ -25,8 +25,8 @@
 		// Cache the close button if it exists
 		this.$closeButton = this.$container.find('.close');
 
-		// When button is expanded into a dialog isExpanded holds true
-		this.isExpanded = false;
+		// When button is expanded into a dialog isOpen holds true
+		this.isOpen = false;
 
 		// Configuration of the popped up dialog
 		this.dialogConfig = {
@@ -38,8 +38,8 @@
 		};
 
 
-		// The width, height, icon, color of the formed button 
-		this.buttonConfig = {
+		// Configuration of Qutton
+		this.quttonConfig = {
 			width : 60,
 			height : 60,
 			backgroundColor : "#EB1220",
@@ -47,20 +47,20 @@
 			easing : 'easeInOutQuint'
 		};
 
-		// Initializes the click listeners on the box itself and other elements
-		this.init = function (buttonConfig) {
+		// Initializes the click listeners on the qutton itself, document and close button
+		this.init = function (quttonConfig) {
 
-			$.extend(this.buttonConfig, buttonConfig);
+			$.extend(this.quttonConfig, quttonConfig);
 			
 			this.$dialog.hide();
 
 			// Set up the icon and other properties of the div
 			this.setIcon();
 			this.$container.css({
-				'width' : this.buttonConfig.width + "px",
-				'height' : this.buttonConfig.height + "px",
-				'background-color' : this.buttonConfig.backgroundColor,
-				'border-radius' : this.buttonConfig.height + "px"
+				'width' : this.quttonConfig.width + "px",
+				'height' : this.quttonConfig.height + "px",
+				'background-color' : this.quttonConfig.backgroundColor,
+				'border-radius' : this.quttonConfig.height + "px"
 			});
 
 
@@ -68,14 +68,14 @@
 			var that = this;
 			// Handle Click on the whole container
 			this.$container.on('click', function(event) {
-				if(!that.isExpanded){
+				if(!that.isOpen){
 					that.openDialog();
 				}
 			});
 
 			// Handle click on the close button
 			this.$closeButton.on('click', function(event){
-				if(that.isExpanded){
+				if(that.isOpen){
 					that.closeDialog();
 				}
 			});
@@ -84,7 +84,7 @@
 			// If clicked out side the material box do same thing as closing the dialog
 			$(document).on('click', function(event) {
 				if(!$(event.target).closest(that.$container.selector).length){
-					if(that.isExpanded){
+					if(that.isOpen){
 						that.closeDialog();
 					}
 				}
@@ -96,17 +96,17 @@
 		this.closeDialog = function() {
 			this.setIcon();
 			this.animateOut();
-			this.isExpanded = false;
+			this.isOpen = false;
 		};
 
 		this.openDialog = function() {
 			this.removeIcon();
 			this.animateIn();
-			this.isExpanded = true;
+			this.isOpen = true;
 		};
 
 		this.setIcon = function() {
-			this.$container.css('background-image', 'url(' + this.buttonConfig.icon + ')');
+			this.$container.css('background-image', 'url(' + this.quttonConfig.icon + ')');
 			this.$container.css('cursor', 'pointer');
 		};
 
@@ -120,8 +120,8 @@
 			var that = this;
 			// Translate amount to make the dialog look like exploding from desired location
 			var translate = {
-				X : -1 * (this.dialogConfig.width/2 - this.buttonConfig.width/2),
-				Y : -0.5 * (this.dialogConfig.height/2 - this.buttonConfig.width/2)
+				X : -1 * (this.dialogConfig.width/2 - this.quttonConfig.width/2),
+				Y : -0.5 * (this.dialogConfig.height/2 - this.quttonConfig.width/2)
 			};
 
 			var inSequence  = [
@@ -134,7 +134,7 @@
 					translateY : translate.Y + this.keepInBounds().Y + "px"
 				}, o : {
 					duration : 500, 
-					easing : this.buttonConfig.easing,
+					easing : this.quttonConfig.easing,
 					begin : function() {
 						that.$container.after(that.$container.clone().css('visibility', 'hidden'));
 						that.$container.css({
@@ -156,16 +156,16 @@
 			var outSequence = [
 				{e : this.$dialog, p : "fadeOut", o : {duration : 150}},
 				{e : this.$container, p :{
-					width : this.buttonConfig.width + "px",
-					height : this.buttonConfig.height + "px",
-					backgroundColor : this.buttonConfig.backgroundColor,
+					width : this.quttonConfig.width + "px",
+					height : this.quttonConfig.height + "px",
+					backgroundColor : this.quttonConfig.backgroundColor,
 					// For a perfect circle we will give border radius the same value as height and width
-					borderRadius : this.buttonConfig.width,
+					borderRadius : this.quttonConfig.width,
 					// Neutralize movement of button after it translated to maintain position
 					translateX : "0px",
 					translateY : "0px"
 				}, o : {
-					easing : this.buttonConfig.easing, 
+					easing : this.quttonConfig.easing, 
 					duration : 200,
 					complete : function() {
 						that.$container.css({
@@ -194,12 +194,12 @@
 			// Coordinates of top center of Qutton before it converts to a a dialog
 			var buttonCenterTop = {
 				top : position.top,
-				left : position.left + (this.buttonConfig.width/2)
+				left : position.left + (this.quttonConfig.width/2)
 			};
 
 			// Coordinates of the dialog once it opens
 			var dialogCoords = {
-				top : buttonCenterTop.top - ( 0.5 * (this.dialogConfig.height/2 - this.buttonConfig.height/2)),
+				top : buttonCenterTop.top - ( 0.5 * (this.dialogConfig.height/2 - this.quttonConfig.height/2)),
 				left : buttonCenterTop.left - (this.dialogConfig.width/2),
 			};
 
