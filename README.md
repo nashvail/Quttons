@@ -15,6 +15,8 @@ Quantum paper is part of Google's new Material Design language.
 
 #How To Use 
 
+**Switch to <u>gh-pages</u> branch to look at code used in demo site.**
+
 ##Step 1, Include Dependencies :
 * Download and include all dependencies in your html file. 
 * After all the dependencies have been included, include Quttons.js or Quttons.min.js and Quttons.css after downloading from this repo.
