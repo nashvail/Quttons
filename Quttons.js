@@ -11,16 +11,16 @@
 	window.Qutton= {};
 
 	// Factory method for producing new Material Dialog objects
-	window.Qutton.getInstance = function(jQueryDOMElement) {
-		if(jQueryDOMElement === null) throw new Error("Passed in element doesn't exist in DOM");
-		return new Qutton(jQueryDOMElement);
+	window.Qutton.getInstance = function(quttonContainer) {
+		if(quttonContainer === null) throw new Error("Passed in element doesn't exist in DOM");
+		return new Qutton(quttonContainer);
 	};
 	
 	// Qutton Object
-	function Qutton(jQueryDOMElement) {
+	function Qutton(quttonContainer) {
 
 		// Cache the important elements as jQuery object
-		this.$container = jQueryDOMElement;
+		this.$container = quttonContainer;
 		// Dialog is alias of the box that pops up on clicking the Qutton
 		this.$dialog = this.$container.children();
 		// Cache the close button if it exists
