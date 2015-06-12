@@ -1,4 +1,4 @@
-(function() {
+(function($) {
 
 	/********************************************
 	* Quttons.js                                *
@@ -245,4 +245,4 @@
 		  ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
 		  ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
 	}
-})();
+})(jQuery);
