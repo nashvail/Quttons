@@ -1,4 +1,4 @@
-(function() {
+(function($) {
 
 	/********************************************
 	* Quttons.js                                *
@@ -16,6 +16,7 @@
 		return new Qutton(jQueryDOMElement);
 	};
 	
+	// Qutton Object
 	function Qutton(jQueryDOMElement) {
 
 		// Cache the important elements as jQuery object
@@ -47,190 +48,192 @@
 			easing : 'easeInOutQuint'
 		};
 
-		// Initializes the click listeners on the qutton itself, document and close button
-		this.init = function (quttonConfig) {
 
-			$.extend(this.quttonConfig, quttonConfig);
-			
-			this.$dialog.hide();
+	}
 
-			// Set up the icon and other properties of the div
-			this.setIcon();
-			this.$container.css({
-				'width' : this.quttonConfig.width + "px",
-				'height' : this.quttonConfig.height + "px",
-				'background-color' : this.quttonConfig.backgroundColor,
-				'border-radius' : this.quttonConfig.height + "px"
-			});
+	// Initializes the click listeners on the qutton itself, document and close button
+	Qutton.prototype.init = function(quttonConfig) {
+
+		$.extend(this.quttonConfig, quttonConfig);
+		
+		this.$dialog.hide();
+
+		// Set up the icon and other properties of the div
+		this.setIcon();
+		this.$container.css({
+			'width' : this.quttonConfig.width + "px",
+			'height' : this.quttonConfig.height + "px",
+			'background-color' : this.quttonConfig.backgroundColor,
+			'border-radius' : this.quttonConfig.height + "px"
+		});
 
 
 
-			var that = this;
-			// Handle Click on the whole container
-			this.$container.on('click', function(event) {
-				if(!that.isOpen){
-					that.openDialog();
-				}
-			});
+		var that = this;
+		// Handle Click on the whole container
+		this.$container.on('click', function(event) {
+			if(!that.isOpen){
+				that.openDialog();
+			}
+		});
 
-			// Handle click on the close button
-			this.$closeButton.on('click', function(event){
+		// Handle click on the close button
+		this.$closeButton.on('click', function(event){
+			if(that.isOpen){
+				that.closeDialog();
+			}
+		});
+
+
+		// If clicked out side the material box do same thing as closing the dialog
+		$(document).on('click', function(event) {
+			if(!$(event.target).closest(that.$container.selector).length){
 				if(that.isOpen){
 					that.closeDialog();
 				}
-			});
-
-
-			// If clicked out side the material box do same thing as closing the dialog
-			$(document).on('click', function(event) {
-				if(!$(event.target).closest(that.$container.selector).length){
-					if(that.isOpen){
-						that.closeDialog();
-					}
-				}
-			});
-
-		};
-
-
-		this.closeDialog = function() {
-			this.setIcon();
-			this.animateOut();
-			this.isOpen = false;
-		};
-
-		this.openDialog = function() {
-			this.removeIcon();
-			this.animateIn();
-			this.isOpen = true;
-		};
-
-		this.setIcon = function() {
-			this.$container.css('background-image', 'url(' + this.quttonConfig.icon + ')');
-			this.$container.css('cursor', 'pointer');
-		};
-
-		this.removeIcon = function() {
-			this.$container.css('background-image', 'none');
-			this.$container.css('cursor', 'auto');
-		};
-
-		// Animates the button into dialog
-		this.animateIn = function() {
-			var that = this;
-			// Translate amount to make the dialog look like exploding from desired location
-			var translate = {
-				X : -1 * (this.dialogConfig.width/2 - this.quttonConfig.width/2),
-				Y : -0.5 * (this.dialogConfig.height/2 - this.quttonConfig.width/2)
-			};
-
-			var inSequence  = [
-				{e : this.$container, p : {
-					width : this.dialogConfig.width +"px",
-					height : this.dialogConfig.height + "px",
-					borderRadius : this.dialogConfig.borderRadius,
-					backgroundColor : this.dialogConfig.backgroundColor,
-					translateX : translate.X + this.keepInBounds().X + "px",
-					translateY : translate.Y + this.keepInBounds().Y + "px"
-				}, o : {
-					duration : 500, 
-					easing : this.quttonConfig.easing,
-					begin : function() {
-						that.$container.after(that.$container.clone().css('visibility', 'hidden'));
-						that.$container.css({
-							'position' : 'absolute',
-							'z-index' : '10000'
-						});
-					}
-
-				}},
-
-				{e : this.$dialog, p : "fadeIn", o : {duration : 300}}
-			];
-			$.Velocity.RunSequence(inSequence );
-		};
-
-		// Animtes dialog into button
-		this.animateOut = function() {
-			var that = this;
-			var outSequence = [
-				{e : this.$dialog, p : "fadeOut", o : {duration : 150}},
-				{e : this.$container, p :{
-					width : this.quttonConfig.width + "px",
-					height : this.quttonConfig.height + "px",
-					backgroundColor : this.quttonConfig.backgroundColor,
-					// For a perfect circle we will give border radius the same value as height and width
-					borderRadius : this.quttonConfig.width,
-					// Neutralize movement of button after it translated to maintain position
-					translateX : "0px",
-					translateY : "0px"
-				}, o : {
-					easing : this.quttonConfig.easing, 
-					duration : 200,
-					complete : function() {
-						that.$container.css({
-							'position' : 'static',
-							'z-index' : that.dialogConfig.zIndex
-						});
-						that.$container.next().remove();
-					}
-				}}
-
-			];
-
-			$.Velocity.RunSequence(outSequence);
-		};
-
-		// Check if the explosion of Qutton is within the document bounds.
-		// Returns an object containing values to translate in X or Y direction in order to 
-		// keep the dialog in bounds of the document on explosion.
-		this.keepInBounds= function() {
-			var $window = $(window);
-			var windowWidth = $window.width();
-			var windowHeight = $window.height();
-
-			var position = this.$container.position();	
-
-			// Coordinates of top center of Qutton before it converts to a a dialog
-			var buttonCenterTop = {
-				top : position.top,
-				left : position.left + (this.quttonConfig.width/2)
-			};
-
-			// Coordinates of the dialog once it opens
-			var dialogCoords = {
-				top : buttonCenterTop.top - ( 0.5 * (this.dialogConfig.height/2 - this.quttonConfig.height/2)),
-				left : buttonCenterTop.left - (this.dialogConfig.width/2),
-			};
-
-			// How much the dialog extends beyond the document
-			var extend  = {
-				left : dialogCoords.left,
-				right : windowWidth - (dialogCoords.left + this.dialogConfig.width),
-				top : dialogCoords.top,
-				bottom : windowHeight - (dialogCoords.top + this.dialogConfig.height)
-			};
-
-			// Amount to translate in X and Y if possible to bring dialog in bounds of document
-			var translateInBounds = {
-				X : this.calculateTranslateAmount(extend.left, extend.right), 
-				Y : this.calculateTranslateAmount(extend.top, extend.bottom) 
-			};
-
-			return translateInBounds;
-		};
-
-		// Calculates and returns the amount to translate the dialog to keep in bounds of the window
-		this.calculateTranslateAmount = function(extendSideOne, extendSideTwo) {
-			if((extendSideOne < 0 && extendSideTwo < 0) || 
-			   (extendSideOne > 0 && extendSideTwo > 0 )) { 
-				return 0;	
 			}
+		});
 
-			// We want to translate in opposite direction of extension
-			return (extendSideOne < 0 ? -extendSideOne : extendSideTwo);
+	};
 
+
+
+	Qutton.prototype.closeDialog = function() {
+		this.setIcon();
+		this.animateOut();
+		this.isOpen = false;
+	};
+
+	Qutton.prototype.openDialog = function() {
+		this.removeIcon();
+		this.animateIn();
+		this.isOpen = true;
+	};
+
+	Qutton.prototype.setIcon = function() {
+		this.$container.css('background-image', 'url(' + this.quttonConfig.icon + ')');
+		this.$container.css('cursor', 'pointer');
+	};
+
+	Qutton.prototype.removeIcon = function() {
+		this.$container.css('background-image', 'none');
+		this.$container.css('cursor', 'auto');
+	};
+
+	// Animates the button into dialog
+	Qutton.prototype.animateIn = function() {
+		var that = this;
+		// Translate amount to make the dialog look like exploding from desired location
+		var translate = {
+			X : -1 * (this.dialogConfig.width/2 - this.quttonConfig.width/2),
+			Y : -0.5 * (this.dialogConfig.height/2 - this.quttonConfig.width/2)
+		};
+
+		var inSequence  = [
+			{e : this.$container, p : {
+				width : this.dialogConfig.width +"px",
+				height : this.dialogConfig.height + "px",
+				borderRadius : this.dialogConfig.borderRadius,
+				backgroundColor : this.dialogConfig.backgroundColor,
+				translateX : translate.X + this.keepInBounds().X + "px",
+				translateY : translate.Y + this.keepInBounds().Y + "px"
+			}, o : {
+				duration : 500, 
+				easing : this.quttonConfig.easing,
+				begin : function() {
+					that.$container.after(that.$container.clone().css('visibility', 'hidden'));
+					that.$container.css({
+						'position' : 'absolute',
+						'z-index' : '10000'
+					});
+				}
+
+			}},
+
+			{e : this.$dialog, p : "fadeIn", o : {duration : 300}}
+		];
+		$.Velocity.RunSequence(inSequence );
+	};
+
+	// Animtes dialog into button
+	Qutton.prototype.animateOut = function() {
+		var that = this;
+		var outSequence = [
+			{e : this.$dialog, p : "fadeOut", o : {duration : 150}},
+			{e : this.$container, p :{
+				width : this.quttonConfig.width + "px",
+				height : this.quttonConfig.height + "px",
+				backgroundColor : this.quttonConfig.backgroundColor,
+				// For a perfect circle we will give border radius the same value as height and width
+				borderRadius : this.quttonConfig.width,
+				// Neutralize movement of button after it translated to maintain position
+				translateX : "0px",
+				translateY : "0px"
+			}, o : {
+				easing : this.quttonConfig.easing, 
+				duration : 200,
+				complete : function() {
+					that.$container.css({
+						'position' : 'static',
+						'z-index' : that.dialogConfig.zIndex
+					});
+					that.$container.next().remove();
+				}
+			}}
+
+		];
+
+		$.Velocity.RunSequence(outSequence);
+	};
+
+	// Check if the explosion of Qutton is within the document bounds.
+	// Returns an object containing values to translate in X or Y direction in order to 
+	// keep the dialog in bounds of the document on explosion.
+	Qutton.prototype.keepInBounds= function() {
+		var $window = $(window);
+		var windowWidth = $window.width();
+		var windowHeight = $window.height();
+
+		var position = this.$container.position();	
+
+		// Coordinates of top center of Qutton before it converts to a a dialog
+		var buttonCenterTop = {
+			top : position.top,
+			left : position.left + (this.quttonConfig.width/2)
+		};
+
+		// Coordinates of the dialog once it opens
+		var dialogCoords = {
+			top : buttonCenterTop.top - ( 0.5 * (this.dialogConfig.height/2 - this.quttonConfig.height/2)),
+			left : buttonCenterTop.left - (this.dialogConfig.width/2),
+		};
+
+		// How much the dialog extends beyond the document
+		var extend  = {
+			left : dialogCoords.left,
+			right : windowWidth - (dialogCoords.left + this.dialogConfig.width),
+			top : dialogCoords.top,
+			bottom : windowHeight - (dialogCoords.top + this.dialogConfig.height)
+		};
+
+		// Amount to translate in X and Y if possible to bring dialog in bounds of document
+		var translateInBounds = {
+			X : this.calculateTranslateAmount(extend.left, extend.right), 
+			Y : this.calculateTranslateAmount(extend.top, extend.bottom) 
+		};
+
+		return translateInBounds;
+	};
+
+	// Calculates and returns the amount to translate the dialog to keep in bounds of the window
+	Qutton.prototype.calculateTranslateAmount = function(extendSideOne, extendSideTwo) {
+		if((extendSideOne < 0 && extendSideTwo < 0) || 
+		   (extendSideOne > 0 && extendSideTwo > 0 )) { 
+			return 0;	
 		}
+
+		// We want to translate in opposite direction of extension
+		return (extendSideOne < 0 ? -extendSideOne : extendSideTwo);
 
 	}
 
@@ -242,4 +245,4 @@
 		  ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
 		  ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
 	}
-})();
+})(jQuery);
