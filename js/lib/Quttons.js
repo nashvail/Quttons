@@ -67,32 +67,10 @@
 			'border-radius' : this.quttonConfig.height + "px"
 		});
 
-
-
-		var that = this;
-		// Handle Click on the whole container
-		this.$container.on('click', function(event) {
-			if(!that.isOpen){
-				that.openDialog();
-			}
-		});
-
-		// Handle click on the close button
-		this.$closeButton.on('click', function(event){
-			if(that.isOpen){
-				that.closeDialog();
-			}
-		});
-
-
-		// If clicked out side the material box do same thing as closing the dialog
-		$(document).on('click', function(event) {
-			if(!$(event.target).closest(that.$container.selector).length){
-				if(that.isOpen){
-					that.closeDialog();
-				}
-			}
-		});
+		// Initialize the event handlers
+		this.events.click.call(this);
+		this.events.click_document.call(this);
+		this.events.click_close_button.call(this);
 
 	};
 
@@ -235,7 +213,52 @@
 		// We want to translate in opposite direction of extension
 		return (extendSideOne < 0 ? -extendSideOne : extendSideTwo);
 
-	}
+	};
+
+
+	/*
+	* Events
+	* -----------------------------
+	* Registers clicks on elmements
+	*/
+	Qutton.prototype.events = {
+		// Handles the click on Qutton
+		click : function() {
+			var that = this;
+			this.$container.on('click', function(){
+				if(!that.isOpen){
+					that.openDialog();
+				}
+			});
+
+		},
+
+		// Handle clicks on the document, aimed at closing the dialog
+		click_document : function() {
+			var that = this;
+			$(document).on('click', function(event) {
+				if(!$(event.target).closest(that.$container.selector).length){
+					if(that.isOpen){
+						that.closeDialog();
+					}
+				}
+			});
+				
+		},
+
+		// Initializes clicks on close button if it exists
+		click_close_button : function() {
+			var that = this;
+			if(this.$closeButton.length){
+				this.$closeButton.on('click', function(event){
+						if(that.isOpen){
+							that.closeDialog();
+					}
+				});
+			}
+		}
+
+	};
 
 	// Converts and returns RGB color code to Hex Code(String)
 	function toHex(rgb){
