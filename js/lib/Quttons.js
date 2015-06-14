@@ -216,11 +216,7 @@
 	};
 
 
-	/*
-	* Events
-	* -----------------------------
-	* Registers clicks on elmements
-	*/
+	// Event listeners 
 	Qutton.prototype.events = {
 		// Handles the click on Qutton
 		click : function() {
