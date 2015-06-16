@@ -12,7 +12,7 @@
 	});
 
 
-	// // For the delete button
+	// For the delete button
 	var quttonDelete = Qutton.getInstance($('#qutton_delete'));
 	quttonDelete.init({
 		icon : './images/icon_delete.png',
