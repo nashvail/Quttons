@@ -11,16 +11,16 @@
 	window.Qutton= {};
 
 	// Factory method for producing new Material Dialog objects
-	window.Qutton.getInstance = function(dialogContainer) {
-		if(dialogContainer === null) throw new Error("Passed in element doesn't exist in DOM");
-		return new Qutton(dialogContainer);
+	window.Qutton.getInstance = function(jQueryDOMElement) {
+		if(jQueryDOMElement === null) throw new Error("Passed in element doesn't exist in DOM");
+		return new Qutton(jQueryDOMElement);
 	};
 	
 	// Qutton Object
-	function Qutton(dialogContainer) {
+	function Qutton(jQueryDOMElement) {
 
 		// Cache the important elements as jQuery object
-		this.$container = dialogContainer;
+		this.$container = jQueryDOMElement;
 		// Dialog is alias of the box that pops up on clicking the Qutton
 		this.$dialog = this.$container.children();
 		// Cache the close button if it exists
@@ -79,13 +79,11 @@
 	Qutton.prototype.closeDialog = function() {
 		this.setIcon();
 		this.animateOut();
-		this.isOpen = false;
 	};
 
 	Qutton.prototype.openDialog = function() {
 		this.removeIcon();
 		this.animateIn();
-		this.isOpen = true;
 	};
 
 	Qutton.prototype.setIcon = function() {
@@ -124,6 +122,9 @@
 						'position' : 'absolute',
 						'z-index' : '10000'
 					});
+				},
+				complete : function() {
+					that.isOpen = true;	
 				}
 
 			}},
@@ -156,6 +157,7 @@
 						'z-index' : that.dialogConfig.zIndex
 					});
 					that.$container.next().remove();
+					that.isOpen = false;
 				}
 			}}
 
@@ -235,11 +237,13 @@
 			$(document).on('click', function(event) {
 				if(!$(event.target).closest(that.$container.selector).length){
 					if(that.isOpen){
+						console.log("yes");
 						that.closeDialog();
+					} else {
+						console.log("Noope");
 					}
 				}
 			});
-				
 		},
 
 		// Initializes clicks on close button if it exists
