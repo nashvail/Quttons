@@ -21,14 +21,14 @@ Quantum paper is part of Google's new Material Design language.
 * Download and include all dependencies in your html file. 
 * After all the dependencies have been included, include Quttons.js or Quttons.min.js and Quttons.css after downloading from this repo.
 * In the following order
-```
-    <script src = "Path/To/jQuery" type = "text/javascript"></script>
-	<script src = "Path/To/velocity.js" type = "text/javascript"></script>
-	<script src = "Path/To/velocity.ui.js" type = "text/javascript"></script>
-	<script src = "Path/To/Quttons.js" type = "text/javascript"></script>
+```html
+<script src = "Path/To/jQuery" type = "text/javascript"></script>
+<script src = "Path/To/velocity.js" type = "text/javascript"></script>
+<script src = "Path/To/velocity.ui.js" type = "text/javascript"></script>
+<script src = "Path/To/Quttons.js" type = "text/javascript"></script>
 ```
 * And CSS
-```
+```html
 <link rel = "stylesheet" href = "Path/To/Quttons.css" />
 ```
 
@@ -38,7 +38,7 @@ Quantum paper is part of Google's new Material Design language.
 * You can also add event listeners to buttons inside the dialog as you normally would.
 * You can add a close button, just remember to give it a class of `close`.
 * Here is sample code for the Upload File Qutton from the [Demo Site](http://nashvail.github.io/Quttons).
-```
+```html
 <div id="uploadDialog">
 	<h2>Upload a new file</h2>
 		<input type="text" id = "fileUrl" placeholder = "Enter URL">
@@ -50,7 +50,7 @@ Quantum paper is part of Google's new Material Design language.
 ##Step 3, Wrap created dialog in a div
 * Wrap dialog created in previous step in a div with class of ***qutton*** and one ***custom id which will be used to reference this qutton in your js file***.
 * Example 
-```
+```html
 <div class = "qutton" id = "qutton_upload">
  ...(Dialog created in previous step) ...
 </div>
@@ -58,12 +58,12 @@ Quantum paper is part of Google's new Material Design language.
 
 ##Step 4, Initialize Qutton
 * In your .js file start by referencing the qutton in the following manner. 
-```
-	var quttonUpload = Qutton.getInstance($('#qutton_upload'));
-	quttonUpload.init({
-		icon : './images/icon_upload.png',
-		backgroundColor : "#917466"
-	});
+```javascript
+var quttonUpload = Qutton.getInstance($('#qutton_upload'));
+quttonUpload.init({
+	icon : './images/icon_upload.png',
+	backgroundColor : "#917466"
+});
 ```
 * Inside `getInstance` you pass in a jQuery object referencing the **custom id** you set up in previous step
 * `init` function takes in an object specifying the configuration of the button, following are currently supported
