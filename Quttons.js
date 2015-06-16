@@ -237,11 +237,8 @@
 			$(document).on('click', function(event) {
 				if(!$(event.target).closest(that.$container.selector).length){
 					if(that.isOpen){
-						console.log("yes");
 						that.closeDialog();
-					} else {
-						console.log("Noope");
-					}
+					} 
 				}
 			});
 		},
