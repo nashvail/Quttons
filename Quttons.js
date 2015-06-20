@@ -99,6 +99,7 @@
 	// Animates the button into dialog
 	Qutton.prototype.animateIn = function() {
 		var that = this;
+        that.isOpening = true;
 		// Translate amount to make the dialog look like exploding from desired location
 		var translate = {
 			X : -1 * (this.dialogConfig.width/2 - this.quttonConfig.width/2),
@@ -124,7 +125,8 @@
 					});
 				},
 				complete : function() {
-					that.isOpen = true;	
+					that.isOpen = true;
+                    that.isOpening = false;
 				}
 
 			}},
@@ -137,6 +139,10 @@
 	// Animtes dialog into button
 	Qutton.prototype.animateOut = function() {
 		var that = this;
+        if (that.closing === true) {
+            return;
+        }
+        that.closing = true;
 		var outSequence = [
 			{e : this.$dialog, p : "fadeOut", o : {duration : 150}},
 			{e : this.$container, p :{
@@ -158,6 +164,7 @@
 					});
 					that.$container.next().remove();
 					that.isOpen = false;
+                    that.closing = false;
 				}
 			}}
 
@@ -238,7 +245,11 @@
 				if(!$(event.target).closest(that.$container.selector).length){
 					if(that.isOpen){
 						that.closeDialog();
-					} 
+					} else if (that.isOpening) {
+                        setTimeout(function(){
+                            that.closeDialog();
+                        }, 300);
+                    }
 				}
 			});
 		},
