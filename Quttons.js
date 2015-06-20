@@ -242,7 +242,6 @@
 		click_document : function() {
 			var that = this;
 			$(document).on('click', function(event) {
-                // Check problem here
 				if(!$(event.target).closest(that.$container.selector).length){
 					if(that.isOpen){
 						that.closeDialog();
