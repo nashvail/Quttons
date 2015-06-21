@@ -117,28 +117,29 @@
 				duration : 500, 
 				easing : this.quttonConfig.easing,
 				begin : function() {
-					that.$container.after(that.$container.clone().css('visibility', 'hidden'));
+
+					// add a placeholder in place to maintain the flow of document
+					if(!that.$container.next('.quttonClonePlaceHolder').length)
+						that.$container.after(that.$container.clone().addClass('quttonClonePlaceHolder'));
 					that.$container.css({
 						'position' : 'absolute',
 						'z-index' : '10000'
 					});
-				},
-				complete : function() {
-					that.isOpen = true;	
 				}
-
 			}},
 
-			{e : this.$dialog, p : "fadeIn", o : {duration : 300}}
+			{e : this.$dialog, p : "fadeIn", o : {duration : 300, complete : function() { that.isOpen = true;}}}
 		];
-		$.Velocity.RunSequence(inSequence );
+
+		if(!that.isOpen)
+			$.Velocity.RunSequence(inSequence );
 	};
 
 	// Animtes dialog into button
 	Qutton.prototype.animateOut = function() {
 		var that = this;
 		var outSequence = [
-			{e : this.$dialog, p : "fadeOut", o : {duration : 150}},
+			{e : this.$dialog, p : "fadeOut", o : {duration : 150, complete : function() {that.isOpen = false;}}},
 			{e : this.$container, p :{
 				width : this.quttonConfig.width + "px",
 				height : this.quttonConfig.height + "px",
@@ -152,18 +153,19 @@
 				easing : this.quttonConfig.easing, 
 				duration : 200,
 				complete : function() {
+					// Remove the placeholder
+					that.$container.next('.quttonClonePlaceHolder').remove();
 					that.$container.css({
 						'position' : 'static',
 						'z-index' : that.dialogConfig.zIndex
 					});
-					that.$container.next().remove();
-					that.isOpen = false;
 				}
 			}}
 
 		];
 
-		$.Velocity.RunSequence(outSequence);
+		if(that.isOpen)
+			$.Velocity.RunSequence(outSequence);
 	};
 
 	// Check if the explosion of Qutton is within the document bounds.
