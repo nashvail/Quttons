@@ -99,6 +99,9 @@
 	// Animates the button into dialog
 	Qutton.prototype.animateIn = function() {
 		var that = this;
+		if (that.isOpening === true) {
+			return;
+		}
         that.isOpening = true;
 		// Translate amount to make the dialog look like exploding from desired location
 		var translate = {
