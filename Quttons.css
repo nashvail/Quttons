@@ -14,3 +14,7 @@
 	position : absolute !important;
 	cursor : pointer;
 }
+
+.quttonClonePlaceHolder {
+	visibility: hidden;
+}
