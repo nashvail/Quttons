@@ -77,8 +77,15 @@
 
 
 	Qutton.prototype.closeDialog = function() {
-		this.setIcon();
-		this.animateOut();
+        var dialog = this;
+        if(dialog.isOpen){
+            dialog.setIcon();
+            dialog.animateOut();
+        } else if (dialog.isOpening) {
+            setTimeout(function(){
+                dialog.closeDialog();
+            }, 100);
+        }
 	};
 
 	Qutton.prototype.openDialog = function() {
@@ -246,13 +253,7 @@
 			var that = this;
 			$(document).on('click', function(event) {
 				if(!$(event.target).closest(that.$container.selector).length){
-					if(that.isOpen){
-						that.closeDialog();
-					} else if (that.isOpening) {
-                        setTimeout(function(){
-                            that.closeDialog();
-                        }, 300);
-                    }
+                    that.closeDialog();
 				}
 			});
 		},
@@ -262,9 +263,7 @@
 			var that = this;
 			if(this.$closeButton.length){
 				this.$closeButton.on('click', function(event){
-						if(that.isOpen){
-							that.closeDialog();
-					}
+                    that.closeDialog();
 				});
 			}
 		}
