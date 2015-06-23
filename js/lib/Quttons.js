@@ -77,8 +77,15 @@
 
 
 	Qutton.prototype.closeDialog = function() {
-		this.setIcon();
-		this.animateOut();
+        var dialog = this;
+        if(dialog.isOpen){
+            dialog.setIcon();
+            dialog.animateOut();
+        } else if (dialog.isOpening) {
+            setTimeout(function(){
+                dialog.closeDialog();
+            }, 100);
+        }
 	};
 
 	Qutton.prototype.openDialog = function() {
@@ -99,6 +106,10 @@
 	// Animates the button into dialog
 	Qutton.prototype.animateIn = function() {
 		var that = this;
+		if (that.isOpening === true) {
+			return;
+		}
+        that.isOpening = true;
 		// Translate amount to make the dialog look like exploding from desired location
 		var translate = {
 			X : -1 * (this.dialogConfig.width/2 - this.quttonConfig.width/2),
@@ -125,6 +136,11 @@
 						'position' : 'absolute',
 						'z-index' : '10000'
 					});
+				},
+				complete : function() {
+					that.isOpen = true;
+                    that.isOpening = false;
+
 				}
 			}},
 
@@ -137,6 +153,10 @@
 	// Animtes dialog into button
 	Qutton.prototype.animateOut = function() {
 		var that = this;
+        if (that.closing === true) {
+            return;
+        }
+        that.closing = true;
 		var outSequence = [
 			{e : this.$dialog, p : "fadeOut", o : {duration : 150}},
 			{e : this.$container, p :{
@@ -159,6 +179,7 @@
 						'z-index' : that.dialogConfig.zIndex
 					});
 					that.isOpen = false;
+                    that.closing = false;
 				}
 			}}
 
