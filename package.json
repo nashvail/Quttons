@@ -1,0 +1,24 @@
+{
+  "name": "quttons",
+  "version": "1.0.0",
+  "description": "Buttons made of Quantum Paper",
+  "main": "Quttons.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nashvail/Quttons.git"
+  },
+  "keywords": [
+    "quantum",
+    "paper",
+    "buttons"
+  ],
+  "author": "https://github.com/nashvail",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nashvail/Quttons/issues"
+  },
+  "homepage": "https://github.com/nashvail/Quttons#readme"
+}
