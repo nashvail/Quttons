@@ -1,5 +1,5 @@
 #Quttons are buttons made of Quantum Paper
-* Qunatum Paper is a digital paper that can change its size, shape and color to accomodate new content.
+* Qunatum Paper is a digital paper that can change its size, shape and color to accommodate new content.
 Quantum paper is part of Google's new Material Design language.
 
 * With this plugin you can hide any div behind a Quantum [Paper] Button or Qutton
