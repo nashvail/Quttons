@@ -11,6 +11,5 @@ Meanwhile check out this [demo(beta)](http://nashvail.github.io/Quttons)
 
  ![Slow Mo Demo](http://i.imgur.com/I6xeQkn.gif)
 
-#Dependencies 
-* jQuery
+#Dependencies
 * Velocity.js with UI Pack

@@ -1,11 +1,11 @@
+/********************************************
+* Quttons.js                                *
+* Quttons are buttons made of Quantum Paper *
+* Author : Nash Vail       		              *
+* @license MIT															*
+*********************************************/
+
 (function() {
-
-	/********************************************
-	* Quttons.js                                *
-	* Quttons are buttons made of Quantum Paper *
-	* Author : Nash Vail                        *
-	*********************************************/
-
 	'use strict';
 	// Exporting module to global
 	window.Qutton= {};
